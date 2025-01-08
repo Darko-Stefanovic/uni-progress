@@ -3,8 +3,6 @@ pragma solidity ^0.8.27;
 
 import "./interfaces/IGateway.sol";
 
-import "hardhat/console.sol";
-
 contract Gateway is IGateway {
     mapping(bytes32 => bool) public certificates;
     mapping(bytes32 => uint256) public certificateAddVotes;
@@ -38,7 +36,6 @@ contract Gateway is IGateway {
         Certificate calldata _certificate
     ) external onlyValidator {
         bytes32 _hash = keccak256(abi.encode(_certificate));
-        console.logBytes32(_hash);
         if (certificates[_hash]) revert CertificateAlreadyAdded(_certificate);
 
         if (hasVotedAddCertificate[_hash][msg.sender])
